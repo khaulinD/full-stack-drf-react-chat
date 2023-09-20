@@ -8,10 +8,10 @@ from server.serializers.channel import ChannelSerializer
 class ServerSerializer(serializers.ModelSerializer):
     num_members = serializers.SerializerMethodField()
     channel_server = ChannelSerializer(many=True)
-
+    category = serializers.StringRelatedField()
     class Meta:
         model = Server
-        fields = "__all__"
+        exclude = ["member", ]
 
     @extend_schema_field(serializers.IntegerField())
     def get_num_members(self, obj):

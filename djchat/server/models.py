@@ -2,9 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import get_object_or_404
 from django.dispatch import receiver
-
 from server.validators import validate_icon_image_size, validate_image_file_extension
-
 from server.model_mixin import IconFileMixin
 
 
@@ -19,9 +17,9 @@ def category_icon_upload_path(instance, filename):
 
 
 class Category(IconFileMixin, models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, )
     description = models.TextField(blank=True, null=True)
-    icon = models.FileField(blank=True, null=True, upload_to=category_icon_upload_path)
+    icon = models.FileField(blank=True, null=True, upload_to=category_icon_upload_path, default="default.jpg")
 
     def __str__(self):
         return self.name
@@ -44,6 +42,7 @@ class Server(IconFileMixin, models.Model):
     def save(self, *args, **kwargs):
         self.delete_old_file('icon', self.icon)
         self.delete_old_file('banner', self.banner)
+        self.name = self.name.lower()
         super().save(*args, **kwargs)
 
     def __str__(self):

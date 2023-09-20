@@ -1,15 +1,15 @@
 from django.db.models import Count
+from drf_spectacular.utils import extend_schema
 from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
-from rest_framework.generics import ListAPIView, GenericAPIView
 from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet, ModelViewSet, GenericViewSet
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.viewsets import ViewSet
 
+from .models import Category
 from .schema import server_list_docs
-from server.models import Server
-from .filters.server import ServerFilter
+from .models import Server
+from .serializers.category import CategoryListSerializer
 from .serializers.server import ServerSerializer
 
 # class ServerListView(ViewSet):
@@ -39,13 +39,13 @@ from .serializers.server import ServerSerializer
 #         serializer = self.serializer_class(queryset, many=True)
 #         return Response(serializer.data)
 
-class ServerListView(ViewSet):
 
+class ServerListView(ViewSet):
     queryset = Server.objects.all()
 
+    # permission_classes = (permissions.IsAuthenticated,)
     @server_list_docs
-    @action(detail=False, methods=['GET'], url_path='list')
-    def list_servers(self, request):
+    def list(self, request):
         category = request.query_params.get("category")
         qty = request.query_params.get("qty")
         by_user = request.query_params.get("by_user") == "true"
@@ -75,8 +75,18 @@ class ServerListView(ViewSet):
                 raise ValidationError(detail="server value error")
 
         if qty:
-            self.queryset = self.queryset[:int(qty)]
+            self.queryset = self.queryset[: int(qty)]
 
-        serializer = ServerSerializer(self.queryset, many=True, context={"num_members": with_num_members})
+        serializer = ServerSerializer(
+            self.queryset, many=True, context={"num_members": with_num_members}
+        )
         return Response(serializer.data)
 
+
+class CategoryListView(ViewSet):
+    queryset = Category.objects.all()
+
+    @extend_schema(responses=CategoryListSerializer)
+    def list(self, request):
+        serializer = CategoryListSerializer(self.queryset, many=True)
+        return Response(serializer.data)

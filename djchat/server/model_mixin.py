@@ -15,5 +15,6 @@ class IconFileMixin(models.Model):
                 old_file.delete(save=False)
 
     def save(self, *args, **kwargs):
+        self.name = self.name.lower()
         self.delete_old_file('icon', self.icon)
         super().save(*args, **kwargs)

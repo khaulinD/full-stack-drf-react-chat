@@ -23,11 +23,11 @@ server_list_docs = extend_schema(
             name="by_user",
             type=OpenApiTypes.BOOL,
             location=OpenApiParameter.QUERY,
-            description="User of servers True/False",
+            description="Get server which this user related True/False",
 
         ),
         OpenApiParameter(
-            name="with_num_member",
+            name="with_num_members",
             type=OpenApiTypes.BOOL,
             location=OpenApiParameter.QUERY,
             description="Include the number of member for each server",
