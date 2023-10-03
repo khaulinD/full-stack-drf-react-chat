@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
+import { useEffect } from "react";
+
 import { useTheme } from "@mui/material/styles";
 import {
     List,
@@ -23,6 +24,8 @@ interface Category {
 
 const ExploreCategories = () => {
     const theme = useTheme();
+
+    const isDarkMode = theme.palette.mode ==='dark';
 
     const { dataCRUD, error, isLoading, fetchData } = useCrud<Category>([], "/category/");
 
@@ -51,7 +54,7 @@ const ExploreCategories = () => {
                 {dataCRUD.map((item) => (
                     <ListItem disablePadding key={item.id} sx={{ display: "flex", width: "100%" }} dense={true}>
                         <Link
-                            to={`category/${item.name}`}
+                            to={`/category/${item.name}`}
                             style={{ textDecoration: "none", color: "inherit", width: "100%" }}
                         >
                             <ListItemButton sx={{ minHeight: 48, width: "100%" }}>
@@ -64,7 +67,9 @@ const ExploreCategories = () => {
                                                 width: "35px",
                                                 height: "35px",
                                                 display: "block",
+                                                filter: isDarkMode ? "invert(100%)":"none",
                                             }}
+
                                         />
                                     </ListItemAvatar>
                                 </ListItemIcon>

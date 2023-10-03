@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import {useParams} from "react-router-dom";
 import useCrud from "../../hooks/useCrud.ts";
 import {useEffect} from "react";
@@ -14,7 +15,7 @@ import {
     ListItemIcon, ListItemText,
     Typography
 } from "@mui/material";
-import Box from "@mui/material/Box";
+
 import { Link } from "react-router-dom";
 import {MEDIA_URL} from "../../config.ts";
 interface  Server{

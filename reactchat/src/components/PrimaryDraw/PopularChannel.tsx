@@ -52,7 +52,7 @@ const PopularChannel: React.FC<Props> = ({open}) =>{
     sx={{ display: "block", width: "100%" }}
     dense={true}
 >
-    <Link to={`server/${item.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+    <Link to={`/server/${item.id}`} style={{ textDecoration: "none", color: "inherit" }}>
         <ListItemButton sx={{ width: "100%" }}>
             <ListItemIcon>
                 <ListItemAvatar sx={{ minWidth: "50px" }}>

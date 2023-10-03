@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-// import Box from '@mui/material/Box';
 import {CssBaseline} from "@mui/material";
 import PrimaryAppBar from "./templates/PrimaryAppBar.tsx";
 import PrimaryDraw from "./templates/PrimaryDraw.tsx";

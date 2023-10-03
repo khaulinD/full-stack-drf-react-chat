@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     #Internal
     "account",
     "server",
+    "webchat"
 
 
 ]
@@ -151,3 +152,9 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}

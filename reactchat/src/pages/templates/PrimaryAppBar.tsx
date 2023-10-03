@@ -1,9 +1,10 @@
+import Box from "@mui/material/Box";
 import {AppBar, Drawer, IconButton, Link, Toolbar, Typography, useMediaQuery} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import MenuIcon from '@mui/icons-material/Menu';
 import React, {useEffect, useState} from "react";
 import ExploreCategories from "../../components/SecondaryDraw/ExploreCategories.tsx";
+import AccountButton from "../../components/PrimaryAppBar/AccountButton.tsx";
 
 
 
@@ -76,7 +77,9 @@ const PrimaryAppBar =()=>{
                         ID_Chat
                     </Typography>
                 </Link>
-
+                <Box sx={{flexGrow:1 }}>
+                    <AccountButton/>
+                </Box>
             </Toolbar>
         </AppBar>
     );
