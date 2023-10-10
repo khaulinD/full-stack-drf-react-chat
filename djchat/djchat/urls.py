@@ -9,22 +9,29 @@ from rest_framework.routers import DefaultRouter
 from server.views import ServerListView, CategoryListView
 from webchat.views import MessageViewSet
 from webchat.consumer import MyChatConsumer
+from account.views import AccountViewSet, JWTCookieTokenObtainPairView
 
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = DefaultRouter()
 router.register(r"server", ServerListView, basename='server-list')
 router.register("category", CategoryListView, basename='category-list')
 router.register("messages", MessageViewSet, basename='message-list')
-
+router.register("users", AccountViewSet, basename='account-list')
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path("api/docs/schema/", SpectacularAPIView.as_view(), name='schema'),
     path("api/docs/schema/ui/", SpectacularSwaggerView.as_view()),
     path("api/", include([
         path("", include(router.urls)),
 
     ])),
+    path('api/token/', JWTCookieTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] #+ router.urls
 
 websocket_urlpatterns = [path("<str:serverId>/<str:channelId>", MyChatConsumer.as_asgi())]

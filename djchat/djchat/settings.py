@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'django_filters',
     "corsheaders",
+    'rest_framework_simplejwt',
     #Internal
     "account",
     "server",
@@ -133,7 +135,9 @@ REST_FRAMEWORK = {
     # YOUR SETTINGS
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
+        #"rest_framework.authentication.SessionAuthentication",
+        #'rest_framework_simplejwt.authentication.JWTAuthentication',
+        "account.authenticate.JWTCookieAuthentication"
 
     ],
     # 'DEFAULT_FILTER_BACKENDS': [
@@ -149,12 +153,24 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': True,
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://127.0.0.1:5173",
+#     "htts://localhost:5173"
+# ]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),   #- every 30 days relogin
+    #JWTCookie
+    "ACCESS_TOKEN_NAME":"access_token",
+    "REFRESH_TOKEN_NAME": "refresh_token",
+    "JWT_COOKIE_SAMESITE": "Lax"
 }

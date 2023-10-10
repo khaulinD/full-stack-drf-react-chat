@@ -4,6 +4,10 @@ import React from "react";
 import Explore from "./pages/Explore.tsx";
 import ToggleColorMode from "./components/ToggleColorMode.tsx";
 import Server from "./pages/Server.tsx";
+import Login from "./pages/Login.tsx";
+import {AuthServiceProvider} from "./context/AuthContext.tsx";
+import TestLogin from "./pages/TestLogin.tsx";
+import ProtectedRoute from "./services/ProtectedRoute.tsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -11,6 +15,13 @@ const router = createBrowserRouter(
             <Route path="/" element={<Home/>}/>
             <Route path="/server/:serverId/:channelId?" element={<Server/>}/>
             <Route path="category/:categoryName" element={<Explore/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/testlogin"
+                   element={<ProtectedRoute>
+                                <TestLogin/>
+                            </ProtectedRoute>
+            }/>
+
         </Route>
     )
 )
@@ -18,9 +29,11 @@ const router = createBrowserRouter(
 
 const App: React.FC =()=>{
     return(
-        <ToggleColorMode>
-            <RouterProvider router={router} />
-        </ToggleColorMode>
+        <AuthServiceProvider>
+            <ToggleColorMode>
+                <RouterProvider router={router} />
+            </ToggleColorMode>
+        </AuthServiceProvider>
 
     )
 }

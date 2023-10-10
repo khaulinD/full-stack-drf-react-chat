@@ -2,7 +2,7 @@
 <project version="4">
   <component name="Black">
     <option name="enabledOnReformat" value="true" />
-    <option name="sdkUUID" value="802accec-61cd-4b6f-bbab-d7a012aede62" />
+    <option name="sdkName" value="Python 3.10 (full-stack-drf-react-chat)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (full-stack-drf-react-chat)" project-jdk-type="Python SDK" />
 </project>

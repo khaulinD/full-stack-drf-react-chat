@@ -8,7 +8,6 @@ from .schemas import list_message_docs
 # Create your views here.
 class MessageViewSet(ViewSet):
 
-
     @list_message_docs
     def list(self, request):
         channel_id = request.query_params.get('channel_id', None)

@@ -63,6 +63,7 @@ const MessageInterface = (props: ServerChannelProps) =>{
     },
     onMessage: (msg) =>{
         const data = JSON.parse(msg.data);
+        console.log(data)
         setNewMessage((prev_msg) =>[...prev_msg, data.new_message])
         setMessage("")
     },
