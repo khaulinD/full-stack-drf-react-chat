@@ -1,20 +1,21 @@
 import {useAuthServiceContext} from "../context/AuthContext.tsx";
 import {useState} from "react";
-import useAxiosWithInterceptor from "../helpers/jwinterceptor.ts";
 import axios from "axios";
+import useAxiosWithInterceptor from "../helpers/jwtinterceptors.ts";
 
 
 const TestLogin = () =>{
+    const jwtAxios = useAxiosWithInterceptor();
     const { isLoggedIn, logout } = useAuthServiceContext();
     const [username, setUsername] = useState("")
 const getUserDetails=async () =>{
         try{
-            const response =  await axios.get(
+            const response =  await jwtAxios.get(
                 `http://127.0.0.1:8000/api/users/?user_id=1`, {
                     withCredentials:true
             });
 
-            const userDetails = response.data
+            const userDetails = response.data[0]
             console.log(response.data)
             setUsername(userDetails.username)
         } catch (err:any){

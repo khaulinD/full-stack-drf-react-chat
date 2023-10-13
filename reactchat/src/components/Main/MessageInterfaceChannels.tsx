@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom";
 import Box from "@mui/material/Box";
 import { MEDIA_URL } from "../../config";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import ExploreCategories from "../SecondaryDraw/ExploreCategories.tsx";
+//import ExploreCategories from "../SecondaryDraw/ExploreCategories.tsx";
 import React, {useEffect, useState} from "react";
 import ServerChannels from "../SecondaryDraw/ServerChannels.tsx";
 interface ServerChannelProps {

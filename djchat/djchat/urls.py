@@ -8,8 +8,8 @@ from rest_framework.routers import DefaultRouter
 
 from server.views import ServerListView, CategoryListView
 from webchat.views import MessageViewSet
-from webchat.consumer import MyChatConsumer
-from account.views import AccountViewSet, JWTCookieTokenObtainPairView
+from webchat.consumer import WebChatConsumer
+from account.views import AccountViewSet, JWTCookieTokenObtainPairView, JWTCookieTokenRefreshView
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -31,10 +31,10 @@ urlpatterns = [
 
     ])),
     path('api/token/', JWTCookieTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/refresh/', JWTCookieTokenRefreshView.as_view(), name='token_refresh'),
 ] #+ router.urls
 
-websocket_urlpatterns = [path("<str:serverId>/<str:channelId>", MyChatConsumer.as_asgi())]
+websocket_urlpatterns = [path("<str:serverId>/<str:channelId>", WebChatConsumer.as_asgi())]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

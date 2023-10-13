@@ -1,4 +1,4 @@
-import useAxiosWithInterceptor from "../helpers/jwinterceptor.ts";
+import useAxiosWithInterceptor from "../helpers/jwtinterceptors.ts";
 import {BASE_URL} from "../config.ts";
 import {useState} from "react";
 

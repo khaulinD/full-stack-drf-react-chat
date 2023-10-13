@@ -167,7 +167,7 @@ CHANNEL_LAYERS = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=15),
+    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),   #- every 30 days relogin
     #JWTCookie
     "ACCESS_TOKEN_NAME":"access_token",
