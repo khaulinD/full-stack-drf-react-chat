@@ -3,6 +3,7 @@ from django.shortcuts import render
 from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
 from .models import Account
@@ -14,6 +15,15 @@ from .serializers.account import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+
+class LogoutAPIView(APIView):
+    def post(self, request, format=None):
+        response = Response("Logout successfully")
+
+        response.set_cookie("refresh_token", "", expires=0)
+        response.set_cookie("access_token", "", expires=0)
+
+        return response
 
 class AccountViewSet(ViewSet):
     queryset = Account.objects.all()

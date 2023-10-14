@@ -1,9 +1,9 @@
 import useWebSocket from "react-use-websocket";
 import { useState } from "react";
 import { useAuthService } from "../services/AuthServices";
-import useCrud from "../../../../../../Desktop/full-stack-django-drf-channels-react-project-djchat-main/reactchat/src/hooks/useCrud.ts";
-import { WS_ROOT } from "../../../../../../Desktop/full-stack-django-drf-channels-react-project-djchat-main/reactchat/src/config.ts";
-import { Server } from "../../../../../../Desktop/full-stack-django-drf-channels-react-project-djchat-main/reactchat/src/@types/server"
+import useCrud from "../hooks/useCrud.ts";
+import { WS_ROOT } from "../config.ts";
+import { Server } from "../@types/server"
 
 interface Message {
     sender: string;

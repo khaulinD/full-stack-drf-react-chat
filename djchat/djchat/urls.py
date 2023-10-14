@@ -9,7 +9,7 @@ from rest_framework.routers import DefaultRouter
 from server.views import ServerListView, CategoryListView
 from webchat.views import MessageViewSet
 from webchat.consumer import WebChatConsumer
-from account.views import AccountViewSet, JWTCookieTokenObtainPairView, JWTCookieTokenRefreshView
+from account.views import AccountViewSet, JWTCookieTokenObtainPairView, JWTCookieTokenRefreshView, LogoutAPIView
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -30,6 +30,7 @@ urlpatterns = [
         path("", include(router.urls)),
 
     ])),
+    path("api/logout/", LogoutAPIView.as_view(), name="logout"),
     path('api/token/', JWTCookieTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', JWTCookieTokenRefreshView.as_view(), name='token_refresh'),
 ] #+ router.urls
