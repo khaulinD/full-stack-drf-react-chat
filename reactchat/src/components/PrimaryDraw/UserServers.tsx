@@ -1,93 +1,111 @@
-import Box from "@mui/material/Box";
 import {
-    Avatar,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Typography
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Typography,
 } from "@mui/material";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import { MEDIA_URL } from "../../config.ts";
 import { Link } from "react-router-dom";
-import React, {useEffect} from "react";
-import useCrud from "../../hooks/useCrud.ts";
-import {MEDIA_URL} from "../../config.ts";
 
-type Props = {
-    open: boolean;
-};
-interface  Server{
-    id: number;
-    name: string;
-    category: string;
-    icon: string;
+interface Server {
+  id: number;
+  name: string;
+  category: string;
+  icon: string;
 }
 
-// interface ServerChannelsProps {
-//     data: Server[];
-// }
-// const UserServers: React.FC<Props & ServerChannelsProps> = ({open}) =>{
-const UserServers: React.FC<Props> = ({open}) =>{
-        const { dataCRUD, fetchData} = useCrud<Server>([], "/server/");
-        useEffect(() => {
-            fetchData();
-        }, []);
+interface ServerChannelsProps {
+  data: Server[];
+}
 
+type Props = {
+  open: boolean;
+};
 
-        return (<>
-            <Box sx={{
-                height:50,
-                p:2,
-                display: "flex",
-                alignItems:"center",
-                flex:"1 1 100%",
-            }}
-
+const UserServers: React.FC<Props & ServerChannelsProps> = ({ open, data }) => {
+  return (
+    <>
+      <Box
+        sx={{
+          height: 50,
+          p: 2,
+          display: "flex",
+          alignItems: "center",
+          flex: "1 1 100%",
+        }}
+      >
+        <Typography sx={{ display: open ? "block" : "none" }}>
+          Servers
+        </Typography>
+      </Box>
+      <List>
+        {data.map((item) => (
+          <ListItem
+            key={item.id}
+            disablePadding
+            sx={{ display: "block" }}
+            dense={true}
+          >
+            <Link
+              to={`/server/${item.id}`}
+              style={{ textDecoration: "none", color: "inherit" }}
             >
-                <Typography sx={{display: open ? "none" : "block", fontWeight: 600, fontSize:"20px"}}>
-                    Servers
-                </Typography>
-            </Box>
-            <List>
-                {dataCRUD.map((item) =>(
-                    <ListItem
-                        key={item.id}
-                        disablePadding
-                        sx={{ display: "block", width: "100%" }}
-                        dense={true}
+              <ListItemButton sx={{ minHeight: 0 }}>
+                <ListItemIcon sx={{ minWidth: 0, justifyContent: "center" }}>
+                  <ListItemAvatar sx={{ minWidth: "50px" }}>
+                    <Avatar
+                      alt="Server Icon"
+                      src={`${MEDIA_URL}${item.icon}`}
+                    />
+                  </ListItemAvatar>
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 700,
+                        lineHeight: 1.2,
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                      }}
                     >
-                        <Link to={`/server/${item.id}`}
-                              style={{ textDecoration: "none", color: "inherit" }}>
-                            <ListItemButton sx={{ width: "100%" }}>
-                                <ListItemIcon>
-                                    <ListItemAvatar sx={{ minWidth: "50px" }}>
-                                        <Avatar alt="Server Icon" src={`${MEDIA_URL}${item.icon}`} />
-                                    </ListItemAvatar>
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={
-                                        <Typography variant="body2" sx={{ fontWeight: 700, lineHeight: 1.2, textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
-                                            {item.name}
-                                        </Typography>
-                                    }
-                                    secondary={
-                                        <Typography variant="body2" sx={{ fontWeight: 400, lineHeight: 1.2, color: "textSecondary" }}>
-                                            {item.category}
-                                        </Typography>
-                                    }
-                                    sx={{ flex: 1 }} // Установите flex на 1 для ListItemText
-                                    primaryTypographyProps={{ sx: { textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" } }}
-                                />
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                ))}
-            </List>
-
-        </>)
-
-    }
-
-
-export default UserServers
+                      {item.name}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 500,
+                        lineHeight: 1.2,
+                        color: "textSecondary",
+                      }}
+                    >
+                      {item.category}
+                    </Typography>
+                  }
+                  sx={{ opacity: open ? 1 : 0 }}
+                  primaryTypographyProps={{
+                    sx: {
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      whitespace: "nowrap",
+                    },
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        ))}
+      </List>
+    </>
+  );
+};
+export default UserServers;

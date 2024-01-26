@@ -1,16 +1,16 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
+
 from .serializers.account import AccountSerializer
 
-list_message_docs = extend_schema(
-    responses=AccountSerializer(many=True),
+user_list_docs = extend_schema(
+    responses=AccountSerializer(),
     parameters=[
         OpenApiParameter(
             name="user_id",
-            type=OpenApiTypes.STR,
+            type=OpenApiTypes.INT,
             location=OpenApiParameter.QUERY,
             description="User ID",
-
         ),
-        ]
+    ],
 )

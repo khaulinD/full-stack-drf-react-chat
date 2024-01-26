@@ -1,6 +1,6 @@
 import useWebSocket from "react-use-websocket";
 import { useState } from "react";
-import { useAuthService } from "../services/AuthServices";
+import { useAuthService } from "./AuthServices.ts";
 import useCrud from "../hooks/useCrud.ts";
 import { WS_ROOT } from "../config.ts";
 import { Server } from "../@types/server"
@@ -22,7 +22,7 @@ const useChatWebSocket = (channelId: string, serverId: string) =>{
     );
 
     const socketUrl = channelId
-    ? `${WS_ROOT}/${serverId}/${channelId}`
+    ? `${WS_ROOT}/${serverId}/${channelId}/`
     : null;
     
     const [reconnectionAttempt, setReconnectionAttempt] = useState(0);

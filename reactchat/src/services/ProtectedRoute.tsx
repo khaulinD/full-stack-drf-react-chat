@@ -1,14 +1,13 @@
-import {useAuthServiceContext} from "../context/AuthContext.tsx";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useAuthServiceContext } from "../context/AuthContext.tsx";
 
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isLoggedIn } = useAuthServiceContext();
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace={true} />;
+  }
+  console.log("test");
+  return <>{children}</>; // Wrapping children in a React fragment
+};
 
-const ProtectedRoute = ({children}: {children: React.ReactNode})=>{
-    const {isLoggedIn} = useAuthServiceContext();
-    if (!isLoggedIn){
-        return <Navigate to="/login" replace={true}></Navigate>
-    }
-    return <>{children}</>
-
-}
-
-export default ProtectedRoute
+export default ProtectedRoute;

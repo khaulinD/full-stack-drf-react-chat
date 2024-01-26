@@ -1,71 +1,78 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import { List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Box,
+  useTheme,
+  ListItemIcon,
+  Typography,
+} from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import { Server } from "../../@types/server.d";
+import { Server } from "../../@types/server";
 
-interface ServerChannelProps {
+interface ServerChannelsProps {
   data: Server[];
 }
 
-const ServerChannels: React.FC<ServerChannelProps> = (props) => {
+const ServerChannels = (props: ServerChannelsProps) => {
   const { data } = props;
+  const theme = useTheme();
   const { serverId } = useParams();
-
   const server_name = data?.[0]?.name ?? "Server";
 
   return (
     <>
       <Box
         sx={{
-          height: "51px",
+          height: "50px",
           display: "flex",
           alignItems: "center",
           px: 2,
-          borderBottom: "1px solid #ccc",
+          borderBottom: `1px solid ${theme.palette.divider}`,
           position: "sticky",
-          top: 0,
-
-          fontWeight: 600,
-          fontSize: "20px",
+          top: 1,
+          backgroundColor: theme.palette.background.default,
         }}
       >
-        <Typography variant="body1" style={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}>
+        <Typography
+          variant="body1"
+          style={{
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }}
+        >
           {server_name}
         </Typography>
       </Box>
-      <List sx={{ p: 0 }}>
+      <List sx={{ py: 0 }}>
         {data.flatMap((obj) =>
           obj.channel_server.map((item) => (
-            <ListItem disablePadding key={item.id} sx={{ display: "flex", width: "100%", maxHeight: "40px" }} dense={true}>
-              <ListItemButton sx={{ minHeight: 48, width: "100%" }}>
-                <Link
-                  to={`/server/${serverId}/${item.id}`}
-                  style={{ textDecoration: "none", color: "inherit", width: "100%" }}
-                >
+            <ListItem
+              disablePadding
+              key={item.id}
+              sx={{ display: "block", maxHeight: "40px" }}
+              dense={true}
+            >
+              <Link
+                to={`/server/${serverId}/${item.id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <ListItemButton sx={{ minHeight: 48 }}>
                   <ListItemText
                     primary={
                       <Typography
-                        variant={"body2"}
-                        sx={{
-                          fontSize: "18px",
-                          fontWeight: 600,
-                          lineHeight: 1.2,
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          marginLeft: "10px",
-                        }}
+                        variant="body1"
+                        textAlign="start"
+                        paddingLeft={1}
                       >
                         {item.name}
                       </Typography>
                     }
-                    primaryTypographyProps={{
-                      sx: { textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" },
-                    }}
                   />
-                </Link>
-              </ListItemButton>
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))
         )}

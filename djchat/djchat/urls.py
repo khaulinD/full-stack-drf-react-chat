@@ -9,7 +9,13 @@ from rest_framework.routers import DefaultRouter
 from server.views import ServerListView, CategoryListView
 from webchat.views import MessageViewSet
 from webchat.consumer import WebChatConsumer
-from account.views import AccountViewSet, JWTCookieTokenObtainPairView, JWTCookieTokenRefreshView, LogoutAPIView
+from account.views import (
+    AccountViewSet,
+    JWTCookieTokenObtainPairView,
+    JWTCookieTokenRefreshView,
+    LogOutAPIView,
+    RegisterView,
+)
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -17,25 +23,36 @@ from rest_framework_simplejwt.views import (
 )
 
 router = DefaultRouter()
-router.register(r"server", ServerListView, basename='server-list')
-router.register("category", CategoryListView, basename='category-list')
-router.register("messages", MessageViewSet, basename='message-list')
-router.register("users", AccountViewSet, basename='account-list')
+router.register(r"server", ServerListView, basename="server-list")
+router.register("category", CategoryListView, basename="category-list")
+router.register("messages", MessageViewSet, basename="message-list")
+router.register("users", AccountViewSet, basename="account-list")
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    path("api/docs/schema/", SpectacularAPIView.as_view(), name='schema'),
+    path("admin/", admin.site.urls),
+    path("api/docs/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/schema/ui/", SpectacularSwaggerView.as_view()),
-    path("api/", include([
-        path("", include(router.urls)),
+    path(
+        "api/",
+        include(
+            [
+                path("", include(router.urls)),
+            ]
+        ),
+    ),
+    path("api/logout/", LogOutAPIView.as_view(), name="logout"),
+    path("api/register/", RegisterView.as_view(), name="register"),
+    path(
+        "api/token/", JWTCookieTokenObtainPairView.as_view(), name="token_obtain_pair"
+    ),
+    path(
+        "api/token/refresh/", JWTCookieTokenRefreshView.as_view(), name="token_refresh"
+    ),
+]  # + router.urls
 
-    ])),
-    path("api/logout/", LogoutAPIView.as_view(), name="logout"),
-    path('api/token/', JWTCookieTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', JWTCookieTokenRefreshView.as_view(), name='token_refresh'),
-] #+ router.urls
-
-websocket_urlpatterns = [path("<str:serverId>/<str:channelId>", WebChatConsumer.as_asgi())]
+websocket_urlpatterns = [
+    path("<str:serverId>/<str:channelId>", WebChatConsumer.as_asgi())
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

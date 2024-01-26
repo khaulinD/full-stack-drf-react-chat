@@ -9,11 +9,11 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import MessageInterfaceChannels from "../Main/MessageInterfaceChannels.tsx";
-import Scroll from "../Main/Scroll.tsx";
+import MessageInterfaceChannels from "./MessageInterfaceChannels.tsx";
+import Scroll from "./Scroll.tsx";
 import { useParams } from "react-router-dom";
 import { Server } from "../../@types/server";
-import useChatWebSocket from "../../services/chatService";
+import useChatWebSocket from "../../services/chatService.ts";
 
 interface SendMessageData {
   type: string;
@@ -37,10 +37,7 @@ const messageInterface = (props: ServerChannelProps) => {
 
   const { serverId, channelId } = useParams();
 
-  const { newMessage, message, setMessage, sendJsonMessage } = useChatWebSocket(
-    channelId || "",
-    serverId || ""
-  );
+  const { newMessage, message, setMessage, sendJsonMessage } = useChatWebSocket(channelId || "", serverId || "");
 
   const server_name = data?.[0]?.name ?? "Server";
 

@@ -1,28 +1,32 @@
-import Box from "@mui/material/Box";
-import {IconButton} from "@mui/material";
-import {ChevronLeft, ChevronRight} from "@mui/icons-material";
+import { ChevronRight, ChevronLeft } from "@mui/icons-material";
+import { Box, IconButton } from "@mui/material";
 import React from "react";
 
+type Props = {
+  open: boolean;
+  handleDrawerClose: () => void;
+  handleDrawerOpen: () => void;
+};
 
-type Props ={
-    open:boolean;
-    handleDrawOpen: () => void;
-    handleDrawClose: () => void;
-}
-
-const DrawerToggle: React.FC<Props> =({open,
-                                      handleDrawClose,
-                                      handleDrawOpen})=>{
-    return (<Box sx={{
+const DrawerToggle: React.FC<Props> = ({
+  open,
+  handleDrawerClose,
+  handleDrawerOpen,
+}) => {
+  return (
+    <Box
+      sx={{
         height: "50px",
         display: "flex",
-        alignItem: "center",
-        justifyContent: "end"
-    }}>
-        <IconButton onClick={open ? handleDrawClose : handleDrawOpen}>
-            {open ? <ChevronRight/> : <ChevronLeft/>}
-        </IconButton>
-    </Box>)
-}
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+        {open ? <ChevronLeft /> : <ChevronRight />}
+      </IconButton>
+    </Box>
+  );
+};
 
-export default DrawerToggle
+export default DrawerToggle;
